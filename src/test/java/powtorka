@@ -1,0 +1,111 @@
+linki:
+https://saucelabs.com/resources/articles/selenium-tips-css-selectors
+https://www.testingexcellence.com/css-selectors-selenium-webdriver/
+http://zvon.org/xxl/XPathTutorial/Output_pol/examples.html
+https://www.red-gate.com/simple-talk/wp-content/uploads/imported/1269-Locators_table_1_0_2.pdf
+
+///////////////////////////////css selectory
+// konkretny element
+<button name="firstName">zapisz</button>
+element -> szuka danego elementu (bez żadnych warunków odnosnie klas itd)
+
+button -> znajdzie nam wszystkie buttony
+
+<button name="firstName">zapisz</button>
+
+// konkretny element z atrybutami
+element[atrybut='wartość']
+*=   -> zawiera się
+^=   -> zaczyna się od
+$=   -> kończy się na
+
+button[name='firstName']
+button[name*='stNa']
+button[name^='fir']
+button[name$='Name']
+
+//css selector po klasie/id
+<button class="name" id="firstName">zapisz</button>
+
+.   -> do części klas (lub konkretny element element.klasa)
+#   -> do id          (lub konkretny element element.id)
+
+.name        -> znajdz element o którego klasa ma 'name'
+#firstName   -> znajdz element o którego id to 'firstName'
+
+button.name      -> znajdz button o którego klasa ma 'name'
+button#firstName -> znajdz button o którego id to 'firstName'
+
+
+<button class="first name">zapisz</button>
+.first
+.name
+button.first
+button.name
+
+// szukanie w głąb elementów
+element element element[atrybut='wartość'] element
+
+<div class='menu'>
+    <button class="first name">zapisz</button>
+</div>
+<div class='footer'>
+    <button class="first name">zapisz</button>
+</div>
+
+div[class='menu'] button[class='first name'] -> weź div
+            z klasą 'menu' i w nim button z klasą 'first'
+
+.menu .first -> weź element z klasą 'menu' i w nim element z klasą 'first'
+div.menu button.first -> weź element z klasą 'menu' i w nim element z klasą 'first'
+
+//css poziomy zagłębień
+<div class='menu'>
+    <div class='table'>
+        <button class="first name">zapisz</button> //butA
+        <div class='footer'>
+            <button class="first name">zapisz</button> //butB
+        </div>
+    </div>
+</div>
+
+elementA > elementB  -> wybierz 'elementB'
+        który jest bezpośrednio pod elementem 'elementA'
+
+div.menu button.first -> zadziała i znajdzie 2 elementu
+div.menu > button.first -> nie znajdzie żadnego elementu
+
+div.table > .first // znajdzie butA
+div.table  .first  // znajdzie butA i butB
+div.footer .first  // znajdzie butB
+
+/////////////////////XPATH
+
+//element[@atrybut="wartość"]
+
+zagłębienia:
+//element[@atrybut="wartość"] //element[@atrybut="wartość"] //element[@atrybut="wartość"]
+// -> gdziekolwiek pod
+/ -> bezpośrednio pod
+css '>'   =  xpath "/"
+//element[@atrybut="wartość"] /element[@atrybut="wartość"]
+
+<div class='menu'>
+    <div class='table'>
+        <button class="first name">zapisz</button> //butA
+        <div class='footer'>
+            <button class="first name">zapisz</button> //butB
+        </div>
+    </div>
+</div>
+//div[@class='table'] //button[class='first name']  -> butA, butB
+//div[@class='table'] /button[class='first name']   -> butA
+//div[@class='footer'] //button[class='first name'] -> butB
+
+// xpath tekst
+//element[.='dokładny tekst']
+//element[contains(text(),'kawałek tekstu')]
+
+<button class="first name">zapisz</button>
+//button[.='zapisz']
+//button[contains(text(),'ap')]
